@@ -42,3 +42,160 @@ body{
 img{
   width:260px;
   border-radius:30px;
+  margin-top:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.25);
+  transition:0.4s;
+}
+
+img:hover{
+  transform:scale(1.05);
+}
+
+/* Buttons */
+button{
+  padding:14px 30px;
+  margin:10px;
+  border:none;
+  border-radius:40px;
+  font-size:16px;
+  cursor:pointer;
+  background:#ff6b81;
+  color:white;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  background:#ff4b6e;
+}
+
+#noBtn{
+  position:relative;
+}
+
+/* Floating hearts */
+.heart{
+  position:fixed;
+  font-size:20px;
+  animation:float 6s linear forwards;
+}
+
+@keyframes float{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-120vh);}
+}
+
+/* Chat bubble */
+.chat{
+  background:white;
+  display:inline-block;
+  padding:15px 20px;
+  border-radius:20px;
+  margin:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Intro -->
+<div class="section show">
+  <div class="glow">Jojesha…</div>
+  <h2 id="typing"></h2>
+</div>
+
+<!-- Story Section -->
+<div class="section">
+  <h2>I replay everything in my head…</h2>
+  <div class="chat">Me: I should’ve handled it better.</div>
+  <div class="chat">Me: I should’ve listened more.</div>
+  <div class="chat">Me: I’m really sorry.</div>
+</div>
+
+<!-- Photo Section -->
+<div class="section">
+  <h2>This is me…</h2>
+  <img src="me2.jpg">
+  <p>Trying to fix what I broke.</p>
+</div>
+
+<!-- Mini Interaction -->
+<div class="section">
+  <h2>Tap the heart if you still care 💗</h2>
+  <button onclick="heartRain()">Tap Me</button>
+</div>
+
+<!-- Final Choice -->
+<div class="section">
+  <h2>Will You Forgive Me?</h2>
+  <button onclick="yes()">Yes ❤️</button>
+  <button onclick="maybe()">I need time ⏳</button>
+  <button id="noBtn">No 😡</button>
+  <p id="response"></p>
+</div>
+
+<script>
+
+/* Scroll animation */
+const sections=document.querySelectorAll(".section");
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    const top=sec.getBoundingClientRect().top;
+    if(top<window.innerHeight-100){
+      sec.classList.add("show");
+    }
+  });
+});
+
+/* Typing effect */
+const text="I never wanted to hurt you. I just want us back. ❤️";
+let i=0;
+function typeWriter(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeWriter,50);
+  }
+}
+typeWriter();
+
+/* Floating hearts */
+function heartRain(){
+  for(let i=0;i<20;i++){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  }
+}
+
+/* Buttons */
+function yes(){
+  document.getElementById("response").innerHTML="You just made me the happiest person alive 🥺💖";
+  heartRain();
+}
+
+function maybe(){
+  document.getElementById("response").innerHTML="I’ll wait. As long as it takes. 🌸";
+}
+
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*80+"vw";
+  noBtn.style.top=Math.random()*80+"vh";
+});
+
+</script>
+
+</body>
+</html>
+
